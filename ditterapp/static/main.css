@@ -1,0 +1,47 @@
+body {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.timeline {
+  width: 50vw;
+}
+
+.dweet {
+  padding: 1rem;
+  margin: 0.5rem;
+  border: solid 0.25rem;
+  height: 10rem;
+  border-radius: 1rem;
+
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.dweet-content {
+  flex-grow: 1;
+}
+
+.dweet-author {
+  padding: 0.5rem 0;
+}
+
+.dweet-author > .display-name {
+  font-weight: 550;
+}
+
+.dweet-author > .username {
+  color: gray;
+}
+
+.like-btn > button > img  {
+    width: 2rem;
+    height: 2rem;
+}
+
+.like-btn > button {
+background-color:unset;
+border:none;
+}
