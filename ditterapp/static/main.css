@@ -36,12 +36,16 @@ body {
   color: gray;
 }
 
-.like-btn > button > img  {
-    width: 2rem;
-    height: 2rem;
+.like-widget {
+  display: flex;
+  align-items: center;
+}
+.like-widget > button > img {
+  width: 2rem;
+  height: 2rem;
 }
 
-.like-btn > button {
-background-color:unset;
-border:none;
+.like-widget > button {
+  background-color: unset;
+  border: none;
 }

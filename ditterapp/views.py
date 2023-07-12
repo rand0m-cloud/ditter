@@ -1,5 +1,7 @@
+from django.shortcuts import render
 from django.template import loader
 from django.http import JsonResponse, HttpResponse
+from django.db.models import F
 from .models import Dweet
 
 
@@ -9,9 +11,7 @@ def create_timeline():
     return [dweet.format() for dweet in dweets]
 
 def index(request):
-    print(create_timeline())
-    template = loader.get_template("ditterapp/index.html")
-    return HttpResponse(template.render({"dweets": create_timeline()}))
+    return render(request, "ditterapp/index.html", {"dweets":create_timeline()})
 
 # /api/v1/timeline
 def timeline(request):
@@ -22,3 +22,16 @@ def timeline(request):
 def view_dweet(request, uuid):
     dweet = Dweet.objects.get(id=uuid)
     return JsonResponse(dweet.format())
+
+# /api/v1/like/<uuid>
+def like_dweet(request, uuid):
+    try:
+        if request.method != "POST":
+            return JsonResponse({"error": "must be a POST request"})
+        dweet = Dweet.objects.get(uuid=uuid)
+        dweet.likes=F("likes") + 1
+        dweet.save()
+
+        return JsonResponse({"likes": Dweet.objects.get(uuid=uuid).likes})
+    except Dweet.DoesNotExist:
+        return JsonResponse({"error": "dweet doesn't exist"})

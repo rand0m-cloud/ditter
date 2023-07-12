@@ -17,10 +17,14 @@
         </div>
         <div class="dweet-content">{{ dweet.content }}</div>
         <div class="dweet-widgets">
-          <div class="like-btn">
-            <button alt="Like this Dweet">
+          <div class="like-widget">
+            <button
+              data-url="{% url 'like_dweet' dweet.uuid %}"
+              alt="Like this Dweet"
+            >
               <img src="{% static 'icons/heart.svg' %}" />
             </button>
+            <span> {{ dweet.likes }} Likes </span>
           </div>
         </div>
       </div>
