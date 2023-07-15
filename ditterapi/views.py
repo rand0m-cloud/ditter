@@ -11,23 +11,30 @@ from .models import Dweet, DweetLike, Author
 
 
 # Creates a list of dweets formatted as a dict
-def create_timeline():
-    dweets = Dweet.objects.all()
-    return [dweet.format() for dweet in dweets]
+def create_timeline(request):
+    dweets = [dweet.format() for dweet in Dweet.objects.all()]
+    for dweet in dweets:
+        likes = [
+            like.user.username
+            for like in DweetLike.objects.filter(dweet_id=dweet["uuid"])
+        ]
+        dweet["liked_by"] = likes
+
+    return dweets
 
 
-# /api/v1/timeline
+# GET /api/v1/timeline
 def timeline(request):
-    return JsonResponse(create_timeline(), safe=False)
+    return JsonResponse(create_timeline(request), safe=False)
 
 
-# /api/v1/dweet/<uuid>
+# GET /api/v1/dweet/<uuid>
 def view_dweet(request, uuid):
     dweet = Dweet.objects.get(id=uuid)
     return JsonResponse(dweet.format())
 
 
-# /api/v1/like/<uuid>
+# POST /api/v1/like/<uuid>
 def like_dweet(request, uuid):
     try:
         if request.method != "POST":
@@ -51,8 +58,11 @@ def like_dweet(request, uuid):
         return JsonResponse({"error": "dweet doesn't exist"})
 
 
-# /api/v1/login
+# POST /api/v1/login
 def login_view(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "must be a POST request"})
+
     login_json = json.loads(request.body)
 
     if "username" not in login_json or "password" not in login_json:
