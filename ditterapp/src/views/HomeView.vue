@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import Dweet from '../components/Dweet.vue'
-import { inject, onMounted, ref } from 'vue'
+import Dweet from "../components/Dweet.vue";
+import { inject, onMounted, ref } from "vue";
 
-const data = ref([])
+const data = ref([]);
 
-const api_backend = inject('api_backend')
+const api_backend = inject("api_backend");
 
 onMounted(async () => {
-  let resp = await fetch(`${api_backend}/api/v1/timeline`)
-  data.value = await resp.json()
-})
+  let resp = await fetch(`${api_backend}/api/v1/timeline`);
+  data.value = await resp.json();
+});
 </script>
 
 <template>

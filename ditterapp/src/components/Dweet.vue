@@ -1,18 +1,33 @@
 <script setup>
-import { inject } from 'vue'
-import HeartIcon from '../components/icons/HeartIcon.vue'
+import { inject, computed } from "vue";
+import HeartIcon from "../components/icons/HeartIcon.vue";
 
-const props = defineProps({ dweet: Object })
-const api_backend = inject('api_backend')
-const user = inject('user')
+const props = defineProps({ dweet: Object });
+const api_backend = inject("api_backend");
+const user = inject("user");
 
-const like = () => {
-  console.log(api_backend)
-  fetch(`${api_backend}/api/v1/like/${props.dweet.uuid}`, {
-    method: 'POST',
-    body: JSON.stringify({ session: user.value.session })
-  })
-}
+const like = computed(() => {
+  return () => {
+    (async () => {
+      let resp = await fetch(`${api_backend}/api/v1/like/${props.dweet.uuid}`, {
+        method: "POST",
+        body: JSON.stringify({ session: user.value.session }),
+      });
+      resp = await resp.json();
+
+      if (resp["error"]) {
+        return;
+      }
+
+      props.dweet.liked_by.push(user.value.author_username);
+      props.dweet.likes += 1;
+    })();
+  };
+});
+
+const liked = computed(() => {
+  return props.dweet.liked_by.includes(user.value?.author_username ?? "");
+});
 </script>
 
 <template>
@@ -25,7 +40,7 @@ const like = () => {
     <div class="dweet-widgets">
       <div class="like-widget">
         <span>{{ props.dweet.likes }}</span
-        ><button alt="Like this Dweet" @click="like"><HeartIcon /></button>
+        ><button alt="Like this Dweet" @click="like"><HeartIcon :filled="liked" /></button>
       </div>
     </div>
   </div>

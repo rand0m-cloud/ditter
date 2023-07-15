@@ -1,21 +1,26 @@
 <script setup>
-import { computed, inject } from 'vue'
+import { computed, inject } from "vue";
+import { RouterLink } from "vue-router";
 
-const user = inject('user')
+const user = inject("user");
 
 const username = computed(() => {
   if (!user.value) {
-    return 'Not Logged In'
+    return "Not Logged In";
   } else {
-    return user.value.author_display_name
+    return user.value.author_display_name;
   }
-})
+});
 </script>
 
 <template>
   <header>
-    <h1 class="header-name">Ditter</h1>
-    <h2>{{ username }}</h2>
+    <RouterLink to="/">
+      <h1 class="header-name">Ditter</h1>
+    </RouterLink>
+    <RouterLink to="/login">
+      <h2>{{ username }}</h2>
+    </RouterLink>
   </header>
 </template>
 

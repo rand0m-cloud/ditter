@@ -1,36 +1,36 @@
 <script setup>
-import { ref, inject } from 'vue'
-import router from '../router'
+import { ref, inject } from "vue";
+import router from "../router";
 
-const username = ref('')
-const password = ref('')
-const error = ref(null)
+const username = ref("");
+const password = ref("");
+const error = ref(null);
 
-const user = inject('user')
-const api_backend = inject('api_backend')
+const user = inject("user");
+const api_backend = inject("api_backend");
 
 const submit = (e) => {
-  ;(async () => {
+  (async () => {
     const resp = await fetch(`${api_backend}/api/v1/login`, {
-      method: 'POST',
-      body: JSON.stringify({ username: username.value, password: password.value })
-    })
-    const json = await resp.json()
-    if (json['error']) {
-      error.value = json['error']
+      method: "POST",
+      body: JSON.stringify({ username: username.value, password: password.value }),
+    });
+    const json = await resp.json();
+    if (json["error"]) {
+      error.value = json["error"];
     } else {
-      error.value = null
-      user.value = json
+      error.value = null;
+      user.value = json;
 
-      sessionStorage.setItem('user', JSON.stringify(json))
+      sessionStorage.setItem("user", JSON.stringify(json));
 
-      router.push('/')
+      router.push("/");
     }
-  })()
+  })();
 
-  e.preventDefault()
-  return false
-}
+  e.preventDefault();
+  return false;
+};
 </script>
 
 <template>
