@@ -20,9 +20,9 @@ API.login(username.value, password.value);
       <p v-if="error" class="login-error">{{ error }}</p>
       <form @submit="submit">
         <label for="username-field">Username:</label>
-        <input class="username-field" type="username" required v-model="username" />
+        <input autocomplete="username" class="username-field" type="text" required v-model="username" />
         <label for="password-field">Password:</label>
-        <input class="password-field" type="password" required v-model="password" />
+        <input autocomplete="password" class="password-field" type="password" required v-model="password" />
         <button>Login</button>
       </form>
     </div>
