@@ -1,14 +1,13 @@
 <script setup>
 import { computed, inject } from "vue";
 import { RouterLink } from "vue-router";
-
-const user = inject("user");
+import API from "../API.js";
 
 const username = computed(() => {
-  if (!user.value) {
+  if (!API.user.value) {
     return "Not Logged In";
   } else {
-    return user.value.author_display_name;
+    return API.user.value.author_display_name;
   }
 });
 </script>

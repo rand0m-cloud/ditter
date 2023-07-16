@@ -1,20 +1,12 @@
-<script setup lang="ts">
+<script setup>
 import { RouterView } from "vue-router";
-import { provide, ref, onMounted } from "vue";
+import { onMounted } from "vue";
 import Header from "./components/Header.vue";
-
-const user = ref(null);
+import API from "./API.js";
 
 onMounted(() => {
-  const storedUser = sessionStorage.getItem("user");
-  if (storedUser) {
-    console.log(storedUser);
-    user.value = JSON.parse(storedUser);
-  }
+  API.checkSessionStorage();
 });
-
-provide("api_backend", "http://localhost:8000");
-provide("user", user);
 </script>
 
 <template>

@@ -1,29 +1,34 @@
 <script setup lang="ts">
 import Dweet from "../components/Dweet.vue";
-import { inject, onMounted, ref } from "vue";
+import ComposeDweetModal from "../components/ComposeDweetModal.vue";
+import { provide, onMounted, ref } from "vue";
+import router from "../router";
+import API from "../API.js";
 
-const data = ref([]);
-
-const api_backend = inject("api_backend");
+const timeline = ref([]);
+provide("timeline", timeline);
 
 onMounted(async () => {
-  let resp = await fetch(`${api_backend}/api/v1/timeline`);
-  data.value = await resp.json();
+  timeline.value = await API.getTimeline();
 });
 </script>
 
 <template>
   <main>
     <div class="timeline">
-      <template v-for="dweet in data">
+      <template v-for="dweet in timeline">
         <Dweet :dweet="dweet" />
       </template>
     </div>
+    <ComposeDweetModal />
   </main>
 </template>
 
 <style>
 .timeline {
   width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

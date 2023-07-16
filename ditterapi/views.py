@@ -6,20 +6,49 @@ from django.contrib.auth import authenticate, login
 from django.contrib.sessions.backends.db import SessionStore
 from django.db.utils import IntegrityError
 import json
+import functools
 
 from .models import Dweet, DweetLike, Author
 
 
-# Creates a list of dweets formatted as a dict
-def create_timeline(request):
-    dweets = [dweet.format() for dweet in Dweet.objects.all()]
-    for dweet in dweets:
-        likes = [
-            like.user.username
-            for like in DweetLike.objects.filter(dweet_id=dweet["uuid"])
-        ]
-        dweet["liked_by"] = likes
+# checks if request is a post and returns an error if not
+def is_post(f):
+    @functools.wraps(f)
+    def inner(request, *args, **kwargs):
+        if request.method != "POST":
+            return JsonResponse({"error": "must be a POST request"})
+        return f(request, *args, **kwargs)
 
+    return inner
+
+
+# checks if request is a post with session data in the body
+# calls the inner function with the session object
+def is_logged_in(f):
+    @is_post
+    @functools.wraps(f)
+    def inner(request, *args, **kwargs):
+        request_json = json.loads(request.body)
+        session_token = None
+
+        try:
+            session_token = request_json["session"]
+        except IndexError:
+            return JsonResponse({"error": "missing session token; please login first"})
+
+        session = SessionStore(session_key=session_token)
+
+        if "uuid" not in session:
+            return JsonResponse({"error": "please login first"})
+
+        return f(request, session, *args, **kwargs)
+
+    return inner
+
+
+# creates a list of dweets formatted as a dict
+def create_timeline(request):
+    dweets = [dweet.format() for dweet in Dweet.objects.all().order_by("-created_on")]
     return dweets
 
 
@@ -30,22 +59,14 @@ def timeline(request):
 
 # GET /api/v1/dweet/<uuid>
 def view_dweet(request, uuid):
-    dweet = Dweet.objects.get(id=uuid)
+    dweet = Dweet.objects.get(uuid=uuid)
     return JsonResponse(dweet.format())
 
 
 # POST /api/v1/like/<uuid>
-def like_dweet(request, uuid):
+@is_logged_in
+def like_dweet(request, session, uuid):
     try:
-        if request.method != "POST":
-            return JsonResponse({"error": "must be a POST request"})
-
-        request_json = json.loads(request.body)
-        session = SessionStore(session_key=request_json["session"])
-
-        if "uuid" not in session:
-            return JsonResponse({"error": "please login first"})
-
         author = Author.objects.get(uuid=session["uuid"])
 
         like = DweetLike(dweet=Dweet.objects.get(uuid=uuid), user=author)
@@ -58,11 +79,18 @@ def like_dweet(request, uuid):
         return JsonResponse({"error": "dweet doesn't exist"})
 
 
-# POST /api/v1/login
-def login_view(request):
-    if request.method != "POST":
-        return JsonResponse({"error": "must be a POST request"})
+# POST /api/v1/dweet
+@is_logged_in
+def post_dweet(request, session):
+    request_json = json.loads(request.body)
+    dweet = Dweet(author_id=session["uuid"], content=request_json["content"])
+    dweet.save()
+    return JsonResponse({"uuid":dweet.uuid })
 
+
+# POST /api/v1/login
+@is_post
+def login_view(request):
     login_json = json.loads(request.body)
 
     if "username" not in login_json or "password" not in login_json:

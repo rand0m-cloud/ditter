@@ -1,33 +1,14 @@
 <script setup>
 import { ref, inject } from "vue";
 import router from "../router";
+import API from "../API.js";
 
 const username = ref("");
 const password = ref("");
 const error = ref(null);
 
-const user = inject("user");
-const api_backend = inject("api_backend");
-
 const submit = (e) => {
-  (async () => {
-    const resp = await fetch(`${api_backend}/api/v1/login`, {
-      method: "POST",
-      body: JSON.stringify({ username: username.value, password: password.value }),
-    });
-    const json = await resp.json();
-    if (json["error"]) {
-      error.value = json["error"];
-    } else {
-      error.value = null;
-      user.value = json;
-
-      sessionStorage.setItem("user", JSON.stringify(json));
-
-      router.push("/");
-    }
-  })();
-
+API.login(username.value, password.value);
   e.preventDefault();
   return false;
 };
@@ -54,6 +35,7 @@ const submit = (e) => {
   justify-content: center;
   padding-top: 1rem;
 }
+
 .login-form {
   display: flex;
   flex-direction: column;

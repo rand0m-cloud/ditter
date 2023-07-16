@@ -1,32 +1,22 @@
 <script setup>
 import { inject, computed } from "vue";
 import HeartIcon from "../components/icons/HeartIcon.vue";
+import API from "../API.js";
 
 const props = defineProps({ dweet: Object });
-const api_backend = inject("api_backend");
-const user = inject("user");
 
-const like = computed(() => {
-  return () => {
-    (async () => {
-      let resp = await fetch(`${api_backend}/api/v1/like/${props.dweet.uuid}`, {
-        method: "POST",
-        body: JSON.stringify({ session: user.value.session }),
-      });
-      resp = await resp.json();
-
-      if (resp["error"]) {
-        return;
-      }
-
-      props.dweet.liked_by.push(user.value.author_username);
+const like = 
+    async () => {
+          let resp = await API.likeDweet(props.dweet.uuid);
+          if (!resp["error"]) {
+      props.dweet.liked_by.push(API.user.value.author_username);
       props.dweet.likes += 1;
-    })();
-  };
-});
+      }
+    }
+  ;
 
 const liked = computed(() => {
-  return props.dweet.liked_by.includes(user.value?.author_username ?? "");
+  return props.dweet.liked_by.includes(API.user.value?.author_username ?? "");
 });
 </script>
 
@@ -51,20 +41,23 @@ const liked = computed(() => {
   padding: 1rem;
   margin: 0.5rem;
   border: solid 0.25rem;
-  height: 10rem;
+  min-height: 10rem;
   border-radius: 1rem;
 
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+
+  width: 25rem;
 }
 
 .dweet-content {
   flex-grow: 1;
+  word-wrap: break-word;
 }
 
 .dweet-author {
-  padding: 0.5rem 0;
+  padding: 0.5rem 0 1rem 0;
 }
 
 .dweet-author > .display-name {
@@ -75,10 +68,15 @@ const liked = computed(() => {
   color: gray;
 }
 
+.dweet-widgets {
+  padding: 1rem 0 0 0;
+}
+
 .like-widget {
   display: flex;
   align-items: center;
 }
+
 .like-widget > button > img {
   width: 2rem;
   height: 2rem;
