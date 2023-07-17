@@ -7,7 +7,12 @@ terraform {
   }
 }
 
-provider "docker" {}
+provider "docker" {
+  registry_auth {
+    address     = "us-central1-docker.pkg.dev"
+    config_file = pathexpand("~/.docker/config.json")
+  }
+}
 
 resource "docker_network" "ditter_network" {
   name = "ditter_network"
