@@ -1,21 +1,9 @@
 resource "docker_image" "django_prod" {
-  name = "django_prod_server"
-
-  build {
-    context    = "../.."
-    dockerfile = "infra/units/django_prod_server.dockerfile"
-    label      = { project : "ditter" }
-  }
+  name = "us-central1-docker.pkg.dev/ditter/ditterrepo/django:latest"
 }
 
 resource "docker_image" "vue_prod" {
-  name = "vue_prod"
-
-  build {
-    context    = "../.."
-    dockerfile = "infra/units/vue_prod_server.dockerfile"
-    label      = { project : "ditter" }
-  }
+  name = "us-central1-docker.pkg.dev/ditter/ditterrepo/vue:latest"
 }
 
 resource "docker_image" "postgres_prod" {

@@ -13,9 +13,9 @@ resource "docker_network" "ditter_network" {
   name = "ditter_network"
 }
 
-resource "docker_container" "django_prod" {
-  name  = "django_prod"
-  image = docker_image.django_prod.image_id
+resource "docker_container" "django_localprod" {
+  name  = "django_localprod"
+  image = docker_image.django_localprod.image_id
 
   ports {
     internal = 80
@@ -26,7 +26,7 @@ resource "docker_container" "django_prod" {
     name = docker_network.ditter_network.name
   }
 
-  depends_on = [docker_container.postgres_prod]
+  depends_on = [docker_container.postgres_localprod]
 
   volumes {
     container_path = "/etc/nginx/nginx.conf"
@@ -34,9 +34,9 @@ resource "docker_container" "django_prod" {
   }
 }
 
-resource "docker_container" "vue_prod" {
-  name  = "vue_prod"
-  image = docker_image.vue_prod.image_id
+resource "docker_container" "vue_localprod" {
+  name  = "vue_localprod"
+  image = docker_image.vue_localprod.image_id
 
   ports {
     internal = 80
@@ -49,10 +49,10 @@ resource "docker_container" "vue_prod" {
   }
 }
 
-resource "docker_container" "postgres_prod" {
-  name     = "postgres_prod"
+resource "docker_container" "postgres_localprod" {
+  name     = "postgres_localprod"
   hostname = "ditterdb"
-  image    = docker_image.postgres_prod.image_id
+  image    = docker_image.postgres_localprod.image_id
 
   env = ["POSTGRES_PASSWORD=${var.db_password}", "POSTGRES_USER=${var.db_username}", "POSTGRES_DB=${var.db_name}", "PGDATA=/var/lib/postgresql/data/pgdata"]
 
