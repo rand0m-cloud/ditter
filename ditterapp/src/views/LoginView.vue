@@ -8,7 +8,11 @@ const password = ref("");
 const error = ref(null);
 
 const submit = (e) => {
-API.login(username.value, password.value);
+  API.login(username.value, password.value).then((resp) => {
+    if (resp["error"]) {
+      error.value = resp["error"];
+    }
+  });
   e.preventDefault();
   return false;
 };
@@ -20,9 +24,21 @@ API.login(username.value, password.value);
       <p v-if="error" class="login-error">{{ error }}</p>
       <form @submit="submit">
         <label for="username-field">Username:</label>
-        <input autocomplete="username" class="username-field" type="text" required v-model="username" />
+        <input
+          autocomplete="username"
+          class="username-field"
+          type="text"
+          required
+          v-model="username"
+        />
         <label for="password-field">Password:</label>
-        <input autocomplete="password" class="password-field" type="password" required v-model="password" />
+        <input
+          autocomplete="password"
+          class="password-field"
+          type="password"
+          required
+          v-model="password"
+        />
         <button>Login</button>
       </form>
     </div>
@@ -33,7 +49,9 @@ API.login(username.value, password.value);
 .login-container {
   display: flex;
   justify-content: center;
+  align-items: center;
   padding-top: 1rem;
+  max-height: 25rem;
 }
 
 .login-form {
@@ -42,7 +60,7 @@ API.login(username.value, password.value);
   min-width: 40vw;
   max-width: 50vw;
   padding: 3rem;
-  background-color: rgb(100, 100, 100, 0.2);
+  background-color: var(--primary-color);
   border-radius: 0.5rem;
 }
 
@@ -54,12 +72,23 @@ API.login(username.value, password.value);
 
 .login-form button {
   height: 2.5rem;
+  background-color: var(--active-color);
+  color: var(--active-text-color);
+  border: none;
+  border-radius: 2rem;
 }
 
 .login-error {
   margin-bottom: 1rem;
-  background-color: rgba(255, 0, 0, 0.2);
+  background-color: var(--error-color);
+  color: var(--error-text-color);
   border-radius: 1rem;
-  padding: 0.5rem;
+  padding: 1rem;
+}
+
+.login-form label {
+  padding: 0.5rem 0;
+  display: block;
+  color: var(--active-text-color);
 }
 </style>

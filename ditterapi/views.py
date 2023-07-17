@@ -85,7 +85,7 @@ def post_dweet(request, session):
     request_json = json.loads(request.body)
     dweet = Dweet(author_id=session["uuid"], content=request_json["content"])
     dweet.save()
-    return JsonResponse({"uuid":dweet.uuid })
+    return JsonResponse({"uuid": dweet.uuid})
 
 
 # POST /api/v1/login
@@ -110,3 +110,15 @@ def login_view(request):
     author_json = author.format()
     author_json["session"] = request.session.session_key
     return JsonResponse(author_json)
+
+
+# GET /api/v1/user/<username>
+def get_user_profile(request, username):
+    try:
+        author = Author.objects.get(username=username)
+        dweets = Dweet.objects.filter(author=author)
+        return JsonResponse(
+            {"author": author.format(), "dweets": [dweet.format() for dweet in dweets]}
+        )
+    except Author.DoesNotExist:
+        return JsonResponse({"error": "Uh Oh! This user does not exist."})

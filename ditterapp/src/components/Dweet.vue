@@ -5,16 +5,13 @@ import API from "../API.js";
 
 const props = defineProps({ dweet: Object });
 
-const like = 
-    async () => {
-          let resp = await API.likeDweet(props.dweet.uuid);
-          if (!resp["error"]) {
-      props.dweet.liked_by.push(API.user.value.author_username);
-      props.dweet.likes += 1;
-      }
-    }
-  ;
-
+const like = async () => {
+  let resp = await API.likeDweet(props.dweet.uuid);
+  if (!resp["error"]) {
+    props.dweet.liked_by.push(API.user.value.author_username);
+    props.dweet.likes += 1;
+  }
+};
 const liked = computed(() => {
   return props.dweet.liked_by.includes(API.user.value?.author_username ?? "");
 });
@@ -39,7 +36,7 @@ const liked = computed(() => {
 <style>
 .dweet {
   padding: 1rem;
-  margin: 0.5rem;
+  margin: 0.5rem 0;
   border: solid 0.25rem;
   min-height: 10rem;
   border-radius: 1rem;
@@ -48,7 +45,8 @@ const liked = computed(() => {
   justify-content: space-between;
   flex-direction: column;
 
-  width: 25rem;
+  width:100%;
+  max-width: 25rem;
 }
 
 .dweet-content {
@@ -62,10 +60,11 @@ const liked = computed(() => {
 
 .dweet-author > .display-name {
   font-weight: 550;
+  color: var(--primary-text-color);
 }
 
 .dweet-author > .username {
-  color: gray;
+  color: var(--secondary-text-color);
 }
 
 .dweet-widgets {

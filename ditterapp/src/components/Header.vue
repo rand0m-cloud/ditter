@@ -18,18 +18,25 @@ const username = computed(() => {
       <h1 class="header-name">Ditter</h1>
     </RouterLink>
     <RouterLink to="/login">
-      <h2>{{ username }}</h2>
+      <h2 class="header-profile">{{ username }}</h2>
     </RouterLink>
   </header>
 </template>
 
 <style>
 header {
-  background-color: rgba(50, 50, 50, 0.3);
+  background-color: var(--primary-color);
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
+  align-items: center;
+  padding: 1rem 2rem;
 }
+
 .header-name {
+  color: var(--logo-text-color);
+}
+
+.header-profile {
+  color: var(--primary-text-color);
 }
 </style>

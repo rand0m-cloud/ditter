@@ -30,5 +30,6 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 2rem 2rem 0 0;
 }
 </style>

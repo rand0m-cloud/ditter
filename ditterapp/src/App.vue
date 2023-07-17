@@ -11,5 +11,7 @@ onMounted(() => {
 
 <template>
   <Header />
-  <RouterView />
+  <main>
+    <RouterView />
+  </main>
 </template>

@@ -22,13 +22,12 @@ class Author(models.Model):
 class Dweet(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     author = models.ForeignKey("Author", on_delete=models.CASCADE)
-    content = models.TextField()
+    content = models.TextField(max_length=300)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def format(self):
         liked_by = [
-            like.user.username
-            for like in DweetLike.objects.filter(dweet_id=self.uuid)
+            like.user.username for like in DweetLike.objects.filter(dweet_id=self.uuid)
         ]
         return {
             "uuid": str(self.uuid),

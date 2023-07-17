@@ -1,14 +1,14 @@
 import router from "./router";
-import {ref} from "vue";
+import { ref } from "vue";
 
 class API {
-    backend = ref(null);
-    session = ref(null);
-    user = ref(null);
+  backend = ref(null);
+  session = ref(null);
+  user = ref(null);
 
   static new(backend) {
     let api = new API();
-    api.backend.value= backend;
+    api.backend.value = backend;
     return api;
   }
 
@@ -39,33 +39,38 @@ class API {
     return resp;
   }
 
-    async getTimeline() {
-        let resp = await fetch(`${this.backend.value}/api/v1/timeline`);
-        return await resp.json();
+  async getTimeline() {
+    let resp = await fetch(`${this.backend.value}/api/v1/timeline`);
+    return await resp.json();
+  }
+
+  async getDweet(uuid) {
+    let resp = await fetch(`${this.backend.value}/api/v1/dweet/${uuid}`);
+    return await resp.json();
+  }
+
+  async login(username, password) {
+    const resp = await fetch(`${this.backend.value}/api/v1/login`, {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+    });
+
+    const json = await resp.json();
+    if (json["error"]) {
+      return json;
+    } else {
+      this.user.value = json;
+      sessionStorage.setItem("user", JSON.stringify(json));
+      router.push("/");
+
+      return {};
     }
+  }
 
-    async getDweet(uuid) {
-        let resp = await fetch(`${this.backend.value}/api/v1/dweet/${uuid}`);
-        return await resp.json();
-
-    }
-    async login(username, password) {
-        const resp = await fetch(`${this.backend.value}/api/v1/login`, {
-            method: "POST",
-            body: JSON.stringify({ username, password}),
-        });
-
-        const json = await resp.json();
-        if (json["error"]) {
-            return json;
-        } else {
-            this.user.value = json;
-            sessionStorage.setItem("user", JSON.stringify(json));
-            router.push("/");
-
-            return {};
-        }
-    }
+  async getUser(username) {
+    let resp = await fetch(`${this.backend.value}/api/v1/user/${username}`);
+    return await resp.json();
+  }
 }
 
 export default API = API.new("http://localhost:8000");

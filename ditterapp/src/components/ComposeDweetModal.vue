@@ -20,17 +20,19 @@ const close_compose_modal = () => {
 };
 
 const post = async () => {
+  if (dweet_content.value == "") {
+    return;
+  }
   close_compose_modal();
-  let resp = await  API.postDweet(dweet_content.value);
-  if(resp["error"]) {
-  return;
+  let resp = await API.postDweet(dweet_content.value);
+  if (resp["error"]) {
+    return;
   }
 
   let uuid = resp["uuid"];
 
   let dweet = await API.getDweet(uuid);
   timeline.value.unshift(dweet);
-
 };
 </script>
 
@@ -51,7 +53,7 @@ const post = async () => {
   position: fixed;
   right: 2rem;
   bottom: 2rem;
-  background-color: rgba(0, 0, 200, 0.5);
+  background-color: var(--active-color);
   padding: 1rem;
   border-radius: 2rem;
   color: white;
@@ -68,6 +70,8 @@ const post = async () => {
 
   display: flex;
   flex-direction: column;
+
+  background-color: var(--modal-front-color);
 }
 
 .compose-modal textarea {
@@ -75,15 +79,19 @@ const post = async () => {
   flex-grow: 10;
   resize: none;
   font-family: inherit;
+  background-color: var(--secondary-color);
+  border: none;
+  border-radius: 2rem;
+  padding: 2rem;
 }
 
 .compose-modal button {
   margin: 1rem 3rem 0 3rem;
   flex-grow: 1;
-  background-color: rgba(0, 0, 200, 0.5);
+  background-color: var(--active-color);
   border: none;
 
-  color: white;
+  color: var(--active-text-color);
   font-weight: bold;
   border-radius: 2rem;
 }
