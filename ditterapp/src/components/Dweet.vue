@@ -15,14 +15,20 @@ const like = async () => {
 const liked = computed(() => {
   return props.dweet.liked_by.includes(API.user.value?.author_username ?? "");
 });
+
+const profile_link = computed(() => {
+  return `/user/${props.dweet.author_username}`;
+});
 </script>
 
 <template>
   <div class="dweet">
-    <div class="dweet-author">
-      <div class="display-name">{{ props.dweet.author_display_name }}</div>
-      <div class="username">@{{ props.dweet.author_username }}</div>
-    </div>
+    <RouterLink :to="profile_link">
+      <div class="dweet-author">
+        <div class="display-name">{{ props.dweet.author_display_name }}</div>
+        <div class="username">@{{ props.dweet.author_username }}</div>
+      </div>
+    </RouterLink>
     <div class="dweet-content">{{ props.dweet.content }}</div>
     <div class="dweet-widgets">
       <div class="like-widget">
