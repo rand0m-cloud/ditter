@@ -73,4 +73,4 @@ class API {
   }
 }
 
-export default API = API.new("http://localhost:8000");
+export default API = API.new(`${location.protocol}//${location.hostname}:8000`);
