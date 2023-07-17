@@ -18,7 +18,7 @@ resource "docker_container" "django_dev" {
     external = var.backend_port
   }
 
-  user =  var.run_as_uid
+  user = var.run_as_uid
 
   volumes {
     container_path = "/app"
@@ -36,9 +36,7 @@ resource "docker_container" "vue_dev" {
     external = var.frontend_port
   }
 
-  user =  var.run_as_uid
-
-  env = ["PORT=${var.frontend_port}"]
+  user = var.run_as_uid
 
   volumes {
     container_path = "/app"
