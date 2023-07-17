@@ -76,6 +76,7 @@ const submit = (e) => {
   color: var(--active-text-color);
   border: none;
   border-radius: 2rem;
+  margin-top: 1rem;
 }
 
 .login-error {
@@ -89,6 +90,6 @@ const submit = (e) => {
 .login-form label {
   padding: 0.5rem 0;
   display: block;
-  color: var(--active-text-color);
+  color: var(--primary-text-color);
 }
 </style>

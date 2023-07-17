@@ -56,7 +56,7 @@ const post = async () => {
   background-color: var(--active-color);
   padding: 1rem;
   border-radius: 2rem;
-  color: white;
+  color: var(--active-text-color);
   border: none;
 }
 
@@ -64,7 +64,6 @@ const post = async () => {
   width: 70vw;
   max-width: 40rem;
   min-height: 20rem;
-  background-color: white;
   border-radius: 1rem;
   padding: 2rem;
 

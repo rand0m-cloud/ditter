@@ -3,6 +3,7 @@
 
 body {
   background-color: var(--primary-color);
+  font-family: Verdana, sans-serif;
 }
 
 main {

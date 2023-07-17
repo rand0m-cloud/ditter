@@ -45,8 +45,8 @@ const liked = computed(() => {
   justify-content: space-between;
   flex-direction: column;
 
-  width:100%;
-  max-width: 25rem;
+  width: 100%;
+  max-width: 40rem;
 }
 
 .dweet-content {

@@ -3,11 +3,15 @@ import { computed, inject } from "vue";
 import { RouterLink } from "vue-router";
 import API from "../API.js";
 
-const username = computed(() => {
-  if (!API.user.value) {
-    return "Not Logged In";
+const logged_in = computed(() => {
+  return !!API.user.value;
+});
+
+const user_link = computed(() => {
+  if (!logged_in) {
+    return null;
   } else {
-    return API.user.value.author_display_name;
+    return `/user/${API.user.value.author_username}`;
   }
 });
 </script>
@@ -17,8 +21,11 @@ const username = computed(() => {
     <RouterLink to="/">
       <h1 class="header-name">Ditter</h1>
     </RouterLink>
-    <RouterLink to="/login">
-      <h2 class="header-profile">{{ username }}</h2>
+    <RouterLink :to="user_link" v-if="logged_in">
+      <h3 class="header-profile">{{ API.user.value.author_username }}</h3>
+    </RouterLink>
+    <RouterLink to="/login" v-if="!logged_in">
+      <h3 class="header-profile">Log In</h3>
     </RouterLink>
   </header>
 </template>

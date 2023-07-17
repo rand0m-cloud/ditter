@@ -2,7 +2,6 @@
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import Dweet from "../components/Dweet.vue";
-import ComposeDweetModal from "../components/ComposeDweetModal.vue";
 import API from "../API.js";
 
 const route = useRoute();
@@ -20,7 +19,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <ComposeDweetModal />
   <div class="profile">
     <div v-if="error" class="error">
       {{ error }}
