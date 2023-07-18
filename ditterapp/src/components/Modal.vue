@@ -15,7 +15,7 @@ const props = defineProps({ open: Boolean, on_clickaway: Function });
   width: 100vw;
   height: 100vh;
   background-color: var(--modal-back-color);
-  opacity: 50%;
+  opacity: 90%;
   top: 0;
 }
 

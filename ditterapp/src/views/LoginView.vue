@@ -2,6 +2,7 @@
 import { ref, inject } from "vue";
 import router from "../router";
 import API from "../API.js";
+import InputField from "../components/InputField.vue";
 
 const username = ref("");
 const password = ref("");
@@ -23,23 +24,29 @@ const submit = (e) => {
     <div class="login-form">
       <p v-if="error" class="login-error">{{ error }}</p>
       <form @submit="submit">
-        <label for="username-field">Username:</label>
-        <input
-          autocomplete="username"
-          class="username-field"
-          type="text"
-          required
-          v-model="username"
-        />
-        <label for="password-field">Password:</label>
-        <input
-          autocomplete="password"
-          class="password-field"
-          type="password"
-          required
-          v-model="password"
-        />
-        <button>Login</button>
+        <InputField>
+          <label for="username-field">Username:</label>
+          <input
+            autocomplete="username"
+            class="username-field"
+            type="text"
+            required
+            v-model="username"
+          />
+        </InputField>
+        <InputField>
+          <label for="password-field">Password:</label>
+          <input
+            autocomplete="password"
+            class="password-field"
+            type="password"
+            required
+            v-model="password"
+          />
+        </InputField>
+        <InputField>
+          <button>Login</button>
+        </InputField>
       </form>
     </div>
   </div>
@@ -50,33 +57,17 @@ const submit = (e) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 1rem;
-  max-height: 25rem;
+  height:fit-content;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  min-width: 40vw;
-  max-width: 50vw;
+  width: 90vw;
+  max-width:50rem;
   padding: 3rem;
   background-color: var(--primary-color);
-  border-radius: 0.5rem;
-}
-
-.login-form button,
-.login-form input {
-  width: 100%;
-  margin-bottom: 0.5rem;
-}
-
-.login-form button {
-  height: 2.5rem;
-  background-color: var(--active-color);
-  color: var(--active-text-color);
-  border: none;
   border-radius: 2rem;
-  margin-top: 1rem;
 }
 
 .login-error {
@@ -85,11 +76,5 @@ const submit = (e) => {
   color: var(--error-text-color);
   border-radius: 1rem;
   padding: 1rem;
-}
-
-.login-form label {
-  padding: 0.5rem 0;
-  display: block;
-  color: var(--primary-text-color);
 }
 </style>

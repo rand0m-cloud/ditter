@@ -78,7 +78,8 @@ const post = async () => {
   flex-grow: 10;
   resize: none;
   font-family: inherit;
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
+  color: var(--primary-text-color);
   border: none;
   border-radius: 2rem;
   padding: 2rem;

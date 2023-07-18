@@ -11,7 +11,7 @@
   --active-color: #dfaf01;
   --active-text-color: black;
 
-  --modal-front-color: var(--primary-color);
-  --modal-back-color: var(--secondary-color);
+  --modal-front-color: var(--secondary-color);
+  --modal-back-color: var(--primary-color);
   --logo-text-color: var(--active-color);
 }

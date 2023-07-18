@@ -14,19 +14,19 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main>
     <div class="timeline">
       <template v-for="dweet in timeline">
         <Dweet :dweet="dweet" />
       </template>
     </div>
     <ComposeDweetModal />
-  </main>
 </template>
 
 <style>
 .timeline {
-  width: 50vw;
+  width: 90vw;
+  max-width: 50rem;
+
   display: flex;
   flex-direction: column;
   align-items: center;
