@@ -23,7 +23,7 @@ resource "docker_container" "django_prod" {
   image = docker_image.django_prod.image_id
 
   ports {
-    internal = 80
+    internal = 443
     external = var.backend_port
   }
 
@@ -37,6 +37,11 @@ resource "docker_container" "django_prod" {
     container_path = "/etc/nginx/nginx.conf"
     host_path      = "${path.cwd}/../units/django_nginx.conf"
   }
+
+  volumes {
+    container_path = "/etc/letsencrypt/live/ditter.rand0m.one"
+    host_path      = "/etc/letsencrypt/live/ditter.rand0m.one"
+  }
 }
 
 resource "docker_container" "vue_prod" {
@@ -44,13 +49,18 @@ resource "docker_container" "vue_prod" {
   image = docker_image.vue_prod.image_id
 
   ports {
-    internal = 80
+    internal = 443
     external = var.frontend_port
   }
 
   volumes {
     container_path = "/etc/nginx/nginx.conf"
     host_path      = "${path.cwd}/../units/vue_nginx.conf"
+  }
+
+  volumes {
+    container_path = "/etc/letsencrypt/live/ditter.rand0m.one"
+    host_path      = "/etc/letsencrypt/live/ditter.rand0m.one"
   }
 }
 

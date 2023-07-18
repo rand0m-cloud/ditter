@@ -19,7 +19,7 @@ resource "docker_container" "django_staging" {
   image = docker_image.django_staging.image_id
 
   ports {
-    internal = 80
+    internal = 443
     external = var.backend_port
   }
 
@@ -33,6 +33,16 @@ resource "docker_container" "django_staging" {
     container_path = "/etc/nginx/nginx.conf"
     host_path      = "${path.cwd}/../units/django_nginx.conf"
   }
+
+  volumes {
+    container_path = "/etc/letsencrypt/live/ditter.rand0m.one/fullchain.pem"
+    host_path      = "${path.cwd}/../units/cert.pem"
+  }
+
+  volumes {
+    container_path = "/etc/letsencrypt/live/ditter.rand0m.one/privkey.pem"
+    host_path      = "${path.cwd}/../units/key.pem"
+  }
 }
 
 resource "docker_container" "vue_staging" {
@@ -40,13 +50,23 @@ resource "docker_container" "vue_staging" {
   image = docker_image.vue_staging.image_id
 
   ports {
-    internal = 80
+    internal = 443
     external = var.frontend_port
   }
 
   volumes {
     container_path = "/etc/nginx/nginx.conf"
     host_path      = "${path.cwd}/../units/vue_nginx.conf"
+  }
+
+  volumes {
+    container_path = "/etc/letsencrypt/live/ditter.rand0m.one/fullchain.pem"
+    host_path      = "${path.cwd}/../units/cert.pem"
+  }
+
+  volumes {
+    container_path = "/etc/letsencrypt/live/ditter.rand0m.one/privkey.pem"
+    host_path      = "${path.cwd}/../units/key.pem"
   }
 }
 
