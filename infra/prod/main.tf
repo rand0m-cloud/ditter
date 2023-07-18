@@ -39,8 +39,13 @@ resource "docker_container" "django_prod" {
   }
 
   volumes {
-    container_path = "/etc/letsencrypt/live/ditter.rand0m.one"
-    host_path      = "/etc/letsencrypt/live/ditter.rand0m.one"
+    container_path = "/etc/letsencrypt/live/ditter.rand0m.one/fullchain.pem"
+    host_path = "/etc/letsencrypt/live/ditter.rand0m.one/fullchain.pem"
+  }
+
+  volumes {
+    container_path = "/etc/letsencrypt/live/ditter.rand0m.one/privkey.pem"
+    host_path = "/etc/letsencrypt/live/ditter.rand0m.one/privkey.pem"
   }
 }
 
@@ -59,8 +64,13 @@ resource "docker_container" "vue_prod" {
   }
 
   volumes {
-    container_path = "/etc/letsencrypt/live/ditter.rand0m.one"
-    host_path      = "/etc/letsencrypt/live/ditter.rand0m.one"
+    container_path = "/etc/letsencrypt/live/ditter.rand0m.one/fullchain.pem"
+    host_path = "/etc/letsencrypt/live/ditter.rand0m.one/fullchain.pem"
+  }
+
+  volumes {
+    container_path = "/etc/letsencrypt/live/ditter.rand0m.one/privkey.pem"
+    host_path = "/etc/letsencrypt/live/ditter.rand0m.one/privkey.pem"
   }
 }
 
