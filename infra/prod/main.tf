@@ -55,7 +55,12 @@ resource "docker_container" "vue_prod" {
 
   ports {
     internal = 443
-    external = var.frontend_port
+    external = 443
+  }
+
+  ports {
+    internal = 80
+    external = 80
   }
 
   volumes {
