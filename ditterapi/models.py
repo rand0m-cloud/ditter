@@ -55,3 +55,7 @@ class DweetLike(models.Model):
             "dweet",
             "user",
         )
+
+
+class InviteCode(models.Model):
+    code = models.CharField(max_length=10)
