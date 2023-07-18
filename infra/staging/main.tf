@@ -7,7 +7,12 @@ terraform {
   }
 }
 
-provider "docker" {}
+provider "docker" {
+}
+
+resource "docker_network" "ditter_network" {
+  name = "ditter_network"
+}
 
 resource "docker_container" "django_staging" {
   name  = "django_staging"
@@ -17,6 +22,12 @@ resource "docker_container" "django_staging" {
     internal = 80
     external = var.backend_port
   }
+
+  networks_advanced {
+    name = docker_network.ditter_network.name
+  }
+
+  depends_on = [docker_container.postgres_staging]
 
   volumes {
     container_path = "/etc/nginx/nginx.conf"
@@ -36,5 +47,22 @@ resource "docker_container" "vue_staging" {
   volumes {
     container_path = "/etc/nginx/nginx.conf"
     host_path      = "${path.cwd}/../units/vue_nginx.conf"
+  }
+}
+
+resource "docker_container" "postgres_staging" {
+  name     = "postgres_staging"
+  hostname = "ditterdb"
+  image    = docker_image.postgres_staging.image_id
+
+  env = ["POSTGRES_PASSWORD=${var.db_password}", "POSTGRES_USER=${var.db_username}", "POSTGRES_DB=${var.db_name}", "PGDATA=/var/lib/postgresql/data/pgdata"]
+
+  networks_advanced {
+    name = docker_network.ditter_network.name
+  }
+
+  volumes {
+    container_path = "/var/lib/postgresql/data"
+    host_path      = var.db_storage_path
   }
 }
