@@ -36,6 +36,8 @@ resource "docker_image" "django_prod" {
     dockerfile = "infra/units/django_prod_server.dockerfile"
     label      = { project : "ditter" }
   }
+
+  triggers = {time = timestamp()}
 }
 resource "docker_image" "vue_prod" {
   name = "us-central1-docker.pkg.dev/ditter/ditterrepo/vue:latest"
@@ -46,4 +48,6 @@ resource "docker_image" "vue_prod" {
     label      = { project : "ditter" }
 
 }
+
+  triggers = {time = timestamp()}
 }
