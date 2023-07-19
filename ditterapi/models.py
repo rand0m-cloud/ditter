@@ -1,13 +1,16 @@
 import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core import validators
 
 
 class Author(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    username = models.CharField(max_length=50, unique=True)
-    display_name = models.TextField()
+    username = models.CharField(max_length=50, unique=True, validators=[])
+    display_name = models.TextField(max_length=50, validators=[
+        validators.RegexValidator("^.{3,50}$", message="Display names have to between 3 and 50 characters in length")
+    ])
 
     def format(self):
         return {
@@ -59,3 +62,6 @@ class DweetLike(models.Model):
 
 class InviteCode(models.Model):
     code = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.code

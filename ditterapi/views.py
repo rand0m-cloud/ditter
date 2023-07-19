@@ -1,14 +1,17 @@
+from django.core.exceptions import ValidationError
 from django.shortcuts import render
 from django.template import loader
 from django.http import JsonResponse, HttpResponse
 from django.db.models import F
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth.password_validation import validate_password
 from django.contrib.sessions.backends.db import SessionStore
 from django.db.utils import IntegrityError
+from django.core.validators import RegexValidator
 import json
 import functools
 
-from .models import Dweet, DweetLike, Author
+from .models import Dweet, DweetLike, Author, InviteCode
 
 
 # checks if request is a post and returns an error if not
@@ -122,3 +125,35 @@ def get_user_profile(request, username):
         )
     except Author.DoesNotExist:
         return JsonResponse({"error": "Uh Oh! This user does not exist."})
+
+# POST /api/v1/register
+@is_post
+def register_user(request):
+    try:
+        request_json = json.loads(request.body)
+        display_name =  request_json["display_name"]
+        username =  request_json["username"]
+        password = request_json["password"]
+        invite_code = request_json["invite_code"]
+
+        RegexValidator("^[\\dA-z]{3,50}$", message="Usernames can only be a combination of characters, numbers, and underscores.\n Usernames must be between 3 and 50 characters in length")(username)
+        RegexValidator("^.{2,50}$", message="Display names have to between 2 and 50 characters in length")(display_name)
+        validate_password(password)
+
+        code = InviteCode.objects.get(code=invite_code)
+        user = get_user_model().objects.create_user(username,  password=password)
+        author = Author.objects.create(user=user, username=username, display_name=display_name,)
+
+        code.delete()
+        user.save()
+        author.save()
+
+        return JsonResponse({})
+    except KeyError:
+        return JsonResponse({"error": "missing a field in this request"})
+    except IntegrityError:
+        return JsonResponse({"error": "This username is already taken"})
+    except ValidationError as e:
+        return JsonResponse({"error": "\n".join(e.messages)})
+    except InviteCode.DoesNotExist:
+        return JsonResponse({"error": "Invite code does not exist or has been redeemed"})
