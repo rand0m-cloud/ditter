@@ -33,6 +33,8 @@ resource "docker_container" "django_prod" {
 
   depends_on = [docker_container.postgres_prod]
 
+  env = ["SECRET_KEY=${var.secret_key}"]
+
   volumes {
     container_path = "/etc/nginx/nginx.conf"
     host_path      = "${path.cwd}/../units/django_nginx.conf"

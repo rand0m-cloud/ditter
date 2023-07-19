@@ -21,3 +21,7 @@ variable "db_name" {
 variable "db_storage_path" {
   type = string
 }
+
+variable "secret_key" {
+  type = string
+}

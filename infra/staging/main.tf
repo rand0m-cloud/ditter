@@ -27,6 +27,8 @@ resource "docker_container" "django_staging" {
     name = docker_network.ditter_network.name
   }
 
+  env = ["SECRET_KEY=${var.secret_key}"]
+
   depends_on = [docker_container.postgres_staging]
 
   volumes {
