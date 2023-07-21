@@ -71,6 +71,14 @@ class API {
     let resp = await fetch(`${this.backend.value}/api/v1/user/${username}`);
     return await resp.json();
   }
+
+  async register({ username, password, invite_code, display_name }) {
+    const resp = await fetch(`${this.backend.value}/api/v1/register`, {
+      method: "POST",
+      body: JSON.stringify({ username, password, invite_code, display_name }),
+    });
+    return await resp.json();
+  }
 }
 
 export default API = API.new(`${location.protocol}//${location.hostname}:8000`);

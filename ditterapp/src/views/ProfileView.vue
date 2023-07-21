@@ -20,7 +20,7 @@ onMounted(async () => {
 
 <template>
   <div class="profile">
-    <div v-if="error" class="error">
+    <div v-if="error" class="profile-error">
       {{ error }}
     </div>
     <div v-if="data" class="profile-view">
@@ -61,5 +61,9 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.profile-error {
+  color: var(--secondary-text-color);
 }
 </style>

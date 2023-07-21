@@ -41,6 +41,7 @@ header {
 
 .header-name {
   color: var(--logo-text-color);
+  font-size: xx-large;
 }
 
 .header-profile {

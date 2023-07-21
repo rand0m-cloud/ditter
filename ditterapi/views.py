@@ -154,6 +154,6 @@ def register_user(request):
     except IntegrityError:
         return JsonResponse({"error": "This username is already taken"})
     except ValidationError as e:
-        return JsonResponse({"error": "\n".join(e.messages)})
+        return JsonResponse({"error": e.messages})
     except InviteCode.DoesNotExist:
         return JsonResponse({"error": "Invite code does not exist or has been redeemed"})
