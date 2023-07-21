@@ -1,6 +1,7 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
+import router from "../router";
 import Dweet from "../components/Dweet.vue";
 import API from "../API.js";
 
@@ -16,6 +17,15 @@ onMounted(async () => {
     data.value = resp;
   }
 });
+
+const is_users_profile = computed(() => {
+  console.log(API.getLoggedInUser());
+});
+
+const logout = async () => {
+  await API.logout();
+  router.push("/");
+};
 </script>
 
 <template>
@@ -25,8 +35,11 @@ onMounted(async () => {
     </div>
     <div v-if="data" class="profile-view">
       <div class="profile-header">
-        <h2>{{ data.author.author_display_name }}</h2>
-        <h3>@{{ data.author.author_username }}</h3>
+        <div>
+          <h2>{{ data.author.author_display_name }}</h2>
+          <h3>@{{ data.author.author_username }}</h3>
+        </div>
+        <button class="profile-logout" @click="logout">Log Out</button>
       </div>
       <div class="profile-timeline">
         <Dweet v-for="dweet in data.dweets" :dweet="dweet" />
@@ -55,6 +68,16 @@ onMounted(async () => {
 
 .profile-header {
   margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-logout {
+  color: var(--active-text-color);
+  background-color: var(--active-color);
+  border: none;
+  border-radius: 1rem;
+  padding: 0 2rem;
 }
 
 .profile-timeline {

@@ -157,3 +157,9 @@ def register_user(request):
         return JsonResponse({"error": e.messages})
     except InviteCode.DoesNotExist:
         return JsonResponse({"error": "Invite code does not exist or has been redeemed"})
+
+@is_post
+@is_logged_in
+def logout(reqeust,session):
+    session.delete()
+    return JsonResponse({})

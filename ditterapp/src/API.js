@@ -79,6 +79,18 @@ class API {
     });
     return await resp.json();
   }
+
+  async logout() {
+    const resp = await fetch(`${this.backend.value}/api/v1/logout`, {
+      method: "POST",
+      body: JSON.stringify({ session: this.user.value.session }),
+    });
+    this.user.value = null;
+  }
+
+  getLoggedInUser() {
+    return this.user.value;
+  }
 }
 
 export default API = API.new(`${location.protocol}//${location.hostname}:8000`);
