@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, watch } from "vue";
 import { useRoute } from "vue-router";
 import router from "../router";
 import Dweet from "../components/Dweet.vue";
@@ -9,14 +9,17 @@ const route = useRoute();
 const data = ref(null);
 const error = ref(null);
 
-onMounted(async () => {
+const fetch_data = async () => {
   let resp = await API.getUser(route.params.username);
   if (resp["error"]) {
     error.value = resp["error"];
   } else {
     data.value = resp;
   }
-});
+};
+
+onMounted(fetch_data);
+watch(route, fetch_data);
 
 const is_users_profile = computed(() => {
   return API.getLoggedInUser()?.author_username == route.params.username;
@@ -42,7 +45,7 @@ const logout = async () => {
         <button class="profile-logout" @click="logout" v-if="is_users_profile">Log Out</button>
       </div>
       <div class="profile-timeline">
-        <Dweet v-for="dweet in data.dweets" :dweet="dweet" />
+        <Dweet v-for="dweet in data.dweets" :dweet="dweet" :key="dweet.uuid"/>
       </div>
     </div>
   </div>
