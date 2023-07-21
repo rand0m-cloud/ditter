@@ -1,5 +1,6 @@
 <script setup>
 import { ref, inject } from "vue";
+import { RouterLink } from "vue-router";
 import router from "../router";
 import API from "../API.js";
 import InputField from "../components/InputField.vue";
@@ -48,6 +49,9 @@ const submit = (e) => {
           <button>Login</button>
         </InputField>
       </form>
+      <div class="login-register-prompt">
+        <span>Need an Account? </span><RouterLink to="/register">Click here</RouterLink>
+      </div>
     </div>
   </div>
 </template>
@@ -76,5 +80,14 @@ const submit = (e) => {
   color: var(--error-text-color);
   border-radius: 1rem;
   padding: 1rem;
+}
+
+.login-register-prompt {
+  padding: 1rem 0;
+  color: var(--primary-text-color);
+}
+
+.login-register-prompt a {
+  color: var(--active-color);
 }
 </style>
