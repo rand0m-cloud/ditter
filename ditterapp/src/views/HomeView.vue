@@ -14,12 +14,12 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="timeline">
-      <template v-for="dweet in timeline">
-        <Dweet :dweet="dweet" />
-      </template>
-    </div>
-    <ComposeDweetModal />
+  <div class="timeline">
+    <template v-for="dweet in timeline">
+      <Dweet :dweet="dweet" />
+    </template>
+  </div>
+  <ComposeDweetModal />
 </template>
 
 <style>

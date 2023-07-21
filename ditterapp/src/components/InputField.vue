@@ -12,10 +12,9 @@
   color: var(--secondary-text-color);
   background-color: var(--secondary-color);
   border: 1px solid var(--active-color);
-  border-radius:1rem;
-  padding:0.75rem;
-  font-size:large;
-  
+  border-radius: 1rem;
+  padding: 0.75rem;
+  font-size: large;
 }
 
 .input-field button {
@@ -30,7 +29,6 @@
   padding: 0.5rem 0;
   display: block;
   color: var(--primary-text-color);
-  font-size:large;
-
+  font-size: large;
 }
 </style>

@@ -57,12 +57,12 @@ const profile_link = computed(() => {
 .dweet-content {
   flex-grow: 1;
   word-wrap: break-word;
-  font-size:large;
+  font-size: large;
 }
 
 .dweet-author {
   padding: 0.5rem 0 1rem 0;
-  font-size:large;
+  font-size: large;
 }
 
 .dweet-author > .display-name {
@@ -81,7 +81,7 @@ const profile_link = computed(() => {
 .like-widget {
   display: flex;
   align-items: center;
-  font-size:large;
+  font-size: large;
 }
 
 .like-widget > button > img {

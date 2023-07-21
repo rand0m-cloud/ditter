@@ -57,14 +57,14 @@ const submit = (e) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height:fit-content;
+  height: fit-content;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
   width: 90vw;
-  max-width:50rem;
+  max-width: 50rem;
   padding: 3rem;
   background-color: var(--primary-color);
   border-radius: 2rem;
