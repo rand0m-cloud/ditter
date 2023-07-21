@@ -2,7 +2,6 @@
 import Dweet from "../components/Dweet.vue";
 import ComposeDweetModal from "../components/ComposeDweetModal.vue";
 import { provide, onMounted, ref } from "vue";
-import router from "../router";
 import API from "../API.js";
 
 const timeline = ref([]);

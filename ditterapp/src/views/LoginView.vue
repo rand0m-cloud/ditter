@@ -1,5 +1,5 @@
 <script setup>
-import { ref, inject } from "vue";
+import { ref } from "vue";
 import { RouterLink } from "vue-router";
 import router from "../router";
 import API from "../API.js";
@@ -14,6 +14,7 @@ const submit = (e) => {
     if (resp["error"]) {
       error.value = resp["error"];
     }
+    router.push("/");
   });
   e.preventDefault();
   return false;

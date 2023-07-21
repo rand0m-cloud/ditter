@@ -81,11 +81,12 @@ class API {
   }
 
   async logout() {
-    const resp = await fetch(`${this.backend.value}/api/v1/logout`, {
+    await fetch(`${this.backend.value}/api/v1/logout`, {
       method: "POST",
       body: JSON.stringify({ session: this.user.value.session }),
     });
     this.user.value = null;
+    sessionStorage.removeItem("user");
   }
 
   getLoggedInUser() {
@@ -93,4 +94,4 @@ class API {
   }
 }
 
-export default API = API.new(`${location.protocol}//${location.hostname}:8000`);
+export default API.new(`${location.protocol}//${location.hostname}:8000`);

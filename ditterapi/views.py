@@ -161,14 +161,14 @@ def register_user(request):
 
         return JsonResponse({})
     except KeyError:
-        return JsonResponse({"error": "missing a field in this request"})
+        return JsonResponse({"error": ["missing a field in this request"]})
     except IntegrityError:
-        return JsonResponse({"error": "This username is already taken"})
+        return JsonResponse({"error": ["This username is already taken"]})
     except ValidationError as e:
         return JsonResponse({"error": e.messages})
     except InviteCode.DoesNotExist:
         return JsonResponse(
-            {"error": "Invite code does not exist or has been redeemed"}
+            {"error": ["Invite code does not exist or has been redeemed"]}
         )
 
 

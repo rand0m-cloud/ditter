@@ -1,5 +1,5 @@
 <script setup>
-import { computed, inject } from "vue";
+import { computed } from "vue";
 import { RouterLink } from "vue-router";
 import API from "../API.js";
 
@@ -8,7 +8,7 @@ const logged_in = computed(() => {
 });
 
 const user_link = computed(() => {
-  if (!logged_in) {
+  if (!logged_in.value) {
     return null;
   } else {
     return `/user/${API.user.value.author_username}`;
@@ -37,6 +37,9 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+
+  position: sticky;
+  top: 0rem;
 }
 
 .header-name {

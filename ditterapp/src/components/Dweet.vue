@@ -1,5 +1,5 @@
 <script setup>
-import { inject, computed } from "vue";
+import { computed } from "vue";
 import HeartIcon from "../components/icons/HeartIcon.vue";
 import API from "../API.js";
 
@@ -44,7 +44,7 @@ const profile_link = computed(() => {
   padding: 1rem;
   margin: 0.5rem 0;
   border: solid 0.25rem;
-  min-height: 10rem;
+  min-height: 12rem;
   border-radius: 1rem;
 
   display: flex;

@@ -19,7 +19,7 @@ onMounted(async () => {
 });
 
 const is_users_profile = computed(() => {
-  console.log(API.getLoggedInUser());
+  return API.getLoggedInUser()?.author_username == route.params.username;
 });
 
 const logout = async () => {
@@ -39,7 +39,7 @@ const logout = async () => {
           <h2>{{ data.author.author_display_name }}</h2>
           <h3>@{{ data.author.author_username }}</h3>
         </div>
-        <button class="profile-logout" @click="logout">Log Out</button>
+        <button class="profile-logout" @click="logout" v-if="is_users_profile">Log Out</button>
       </div>
       <div class="profile-timeline">
         <Dweet v-for="dweet in data.dweets" :dweet="dweet" />

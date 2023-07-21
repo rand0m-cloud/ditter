@@ -1,5 +1,6 @@
 <script setup>
 import { inject, ref } from "vue";
+import router from "../router";
 import Modal from "./Modal.vue";
 import API from "../API.js";
 
@@ -8,7 +9,7 @@ const dweet_content = ref("");
 const timeline = inject("timeline");
 
 const open_compose_modal = () => {
-  if (!API.user) {
+  if (!API.user.value) {
     router.push("/login");
     return;
   }
