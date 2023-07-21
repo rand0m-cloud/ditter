@@ -11,7 +11,7 @@ const props = defineProps({ open: Boolean, on_clickaway: Function });
 
 <style>
 .modal-back {
-  position: absolute;
+  position: fixed;
   width: 100vw;
   height: 100vh;
   background-color: var(--modal-back-color);
@@ -20,7 +20,7 @@ const props = defineProps({ open: Boolean, on_clickaway: Function });
 }
 
 .modal-content {
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
