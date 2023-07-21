@@ -126,23 +126,34 @@ def get_user_profile(request, username):
     except Author.DoesNotExist:
         return JsonResponse({"error": "Uh Oh! This user does not exist."})
 
+
 # POST /api/v1/register
 @is_post
 def register_user(request):
     try:
         request_json = json.loads(request.body)
-        display_name =  request_json["display_name"]
-        username =  request_json["username"]
+        display_name = request_json["display_name"]
+        username = request_json["username"]
         password = request_json["password"]
         invite_code = request_json["invite_code"]
 
-        RegexValidator("^[\\dA-z]{3,50}$", message="Usernames can only be a combination of characters, numbers, and underscores.\n Usernames must be between 3 and 50 characters in length")(username)
-        RegexValidator("^.{2,50}$", message="Display names have to between 2 and 50 characters in length")(display_name)
+        RegexValidator(
+            "^[\\dA-z]{3,50}$",
+            message="Usernames can only be a combination of characters, numbers, and underscores.\n Usernames must be between 3 and 50 characters in length",
+        )(username)
+        RegexValidator(
+            "^.{2,50}$",
+            message="Display names have to between 2 and 50 characters in length",
+        )(display_name)
         validate_password(password)
 
         code = InviteCode.objects.get(code=invite_code)
-        user = get_user_model().objects.create_user(username,  password=password)
-        author = Author.objects.create(user=user, username=username, display_name=display_name,)
+        user = get_user_model().objects.create_user(username, password=password)
+        author = Author.objects.create(
+            user=user,
+            username=username,
+            display_name=display_name,
+        )
 
         code.delete()
         user.save()
@@ -156,10 +167,13 @@ def register_user(request):
     except ValidationError as e:
         return JsonResponse({"error": e.messages})
     except InviteCode.DoesNotExist:
-        return JsonResponse({"error": "Invite code does not exist or has been redeemed"})
+        return JsonResponse(
+            {"error": "Invite code does not exist or has been redeemed"}
+        )
+
 
 @is_post
 @is_logged_in
-def logout(reqeust,session):
+def logout(reqeust, session):
     session.delete()
     return JsonResponse({})

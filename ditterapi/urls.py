@@ -10,5 +10,5 @@ urlpatterns = [
     path("dweet", views.post_dweet, name="post_dweet"),
     path("user/<str:username>", views.get_user_profile, name="user_view"),
     path("register", views.register_user, name="register_view"),
-    path("logout", views.logout, name="logout_view")
+    path("logout", views.logout, name="logout_view"),
 ]
