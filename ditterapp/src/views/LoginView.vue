@@ -13,8 +13,9 @@ const submit = (e) => {
   API.login(username.value, password.value).then((resp) => {
     if (resp["error"]) {
       error.value = resp["error"];
+    } else {
+      router.push("/");
     }
-    router.push("/");
   });
   e.preventDefault();
   return false;
