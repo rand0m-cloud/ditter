@@ -119,7 +119,7 @@ def login_view(request):
 def get_user_profile(request, username):
     try:
         author = Author.objects.get(username=username)
-        dweets = Dweet.objects.filter(author=author)
+        dweets = Dweet.objects.filter(author=author).order_by("-created_on")
         return JsonResponse(
             {"author": author.format(), "dweets": [dweet.format() for dweet in dweets]}
         )
