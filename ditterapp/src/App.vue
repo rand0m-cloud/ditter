@@ -1,7 +1,6 @@
 <script setup>
 import { RouterView } from "vue-router";
 import { onMounted } from "vue";
-import Header from "./components/Header.vue";
 import API from "./API.js";
 
 onMounted(() => {
@@ -10,8 +9,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <Header />
-  <main>
+  <v-app>
+  <v-layout>
+  <v-app-bar class="bg-orange"> 
+    <v-app-bar-title class="text-h5 text-blue-darken-4">Ditter</v-app-bar-title>
+  </v-app-bar>
+  <v-main>
     <RouterView />
-  </main>
+    </v-main>
+  </v-layout>
+  </v-app>
 </template>
