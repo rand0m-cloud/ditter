@@ -10,13 +10,9 @@ onMounted(() => {
 
 <template>
   <v-app>
-  <v-layout>
-  <v-app-bar class="bg-orange"> 
-    <v-app-bar-title class="text-h5 text-blue-darken-4">Ditter</v-app-bar-title>
-  </v-app-bar>
-  <v-main>
-    <RouterView />
-    </v-main>
-  </v-layout>
+      <v-app-bar class="bg-orange" title="Ditter"/>
+      <v-main>
+        <RouterView />
+      </v-main>
   </v-app>
 </template>
