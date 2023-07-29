@@ -49,6 +49,14 @@ const submit = (e) => {
                     <v-btn block type="submit" @click="submit">Login</v-btn>
                   </v-col>
                 </v-row>
+                <v-row justify="space-around">
+                  <v-col sm="6" md="6">
+                    <p class="text-center">
+                      Need an account?
+                      <RouterLink to="/register"><span>Create one</span></RouterLink>
+                    </p>
+                  </v-col>
+                </v-row>
               </v-container>
             </v-form>
           </v-sheet>
