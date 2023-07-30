@@ -67,7 +67,7 @@ const submit = async (e) => {
               <v-container>
                 <v-row>
                   <v-col>
-                    <p class="text-h5">Register</p> 
+                    <p class="text-h5">Register</p>
                   </v-col>
                 </v-row>
                 <v-row v-for="error in errors" v-if="errors.length > 0">
@@ -77,17 +77,22 @@ const submit = async (e) => {
                 </v-row>
                 <v-row>
                   <v-col>
-                  <v-text-field v-model="display_name" label="Display Name" />
-                  <v-text-field v-model="username" label="Username" autocomplete="username" />
-                  <v-text-field v-model="password" label="Password" type="password"/>
-                  <v-text-field v-model="password_confirm" label="Confirm Password" autocomplete="new-password" type="password"/>
-                  <v-text-field v-model="invite_code" label="Invite Code" />
+                    <v-text-field v-model="display_name" label="Display Name" />
+                    <v-text-field v-model="username" label="Username" autocomplete="username" />
+                    <v-text-field v-model="password" label="Password" type="password" />
+                    <v-text-field
+                      v-model="password_confirm"
+                      label="Confirm Password"
+                      autocomplete="new-password"
+                      type="password"
+                    />
+                    <v-text-field v-model="invite_code" label="Invite Code" />
                   </v-col>
                 </v-row>
                 <v-row justify="space-around">
-                <v-col sm="8" md="6">
-                <v-btn block @click="submit">Register</v-btn>
-                </v-col>
+                  <v-col sm="8" md="6">
+                    <v-btn block @click="submit">Register</v-btn>
+                  </v-col>
                 </v-row>
               </v-container>
             </v-form>

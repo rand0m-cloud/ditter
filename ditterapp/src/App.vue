@@ -1,5 +1,5 @@
 <script setup>
-import { RouterView } from "vue-router";
+import { RouterView, RouterLink } from "vue-router";
 import { onMounted, computed } from "vue";
 import API from "./API.js";
 import router from "./router";
@@ -22,7 +22,10 @@ const login = () => router.push("/login");
 
 <template>
   <v-app>
-    <v-app-bar class="bg-orange" title="Ditter">
+    <v-app-bar class="bg-orange">
+      <v-app-bar-title>
+        <RouterLink to="/" class="header-link text-blue-darken-4">Ditter</RouterLink>
+      </v-app-bar-title>
       <template v-slot:append>
         <v-btn v-if="login_status == `logged-in`" @click="logout">
           <v-icon>mdi-logout</v-icon>Logout
@@ -37,3 +40,12 @@ const login = () => router.push("/login");
     </v-main>
   </v-app>
 </template>
+
+<style>
+.header-link,
+.header-link:visited,
+.header-link:active {
+  text-decoration: none;
+  color: unset;
+}
+</style>
