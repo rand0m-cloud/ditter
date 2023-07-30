@@ -24,7 +24,7 @@ const login = () => router.push("/login");
   <v-app>
     <v-app-bar class="bg-orange">
       <v-app-bar-title>
-        <RouterLink to="/" class="header-link text-blue-darken-4">Ditter</RouterLink>
+        <RouterLink to="/" class="reset-link text-blue-darken-4">Ditter</RouterLink>
       </v-app-bar-title>
       <template v-slot:append>
         <v-btn v-if="login_status == `logged-in`" @click="logout">
@@ -40,12 +40,3 @@ const login = () => router.push("/login");
     </v-main>
   </v-app>
 </template>
-
-<style>
-.header-link,
-.header-link:visited,
-.header-link:active {
-  text-decoration: none;
-  color: unset;
-}
-</style>

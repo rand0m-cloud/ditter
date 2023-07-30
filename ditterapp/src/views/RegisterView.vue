@@ -10,7 +10,11 @@ const password_confirm = ref("");
 const invite_code = ref("");
 const errors = ref([]);
 
-const fields = [[display_name, "Display Name"], [username, "Username"], [password, "Password"]];
+const fields = [
+  [display_name, "Display Name"],
+  [username, "Username"],
+  [password, "Password"],
+];
 
 const submit = async (e) => {
   e.preventDefault();

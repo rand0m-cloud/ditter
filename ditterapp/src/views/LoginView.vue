@@ -25,7 +25,7 @@ const submit = (e) => {
     <v-container fluid>
       <v-row justify="space-around">
         <v-col xs="12" sm="10" md="8" lg="6" xl="4">
-          <v-sheet rounded class="pa-2" elevation="8">
+          <v-sheet rounded="xl" class="pa-8" elevation="8">
             <v-form @submit.prevent>
               <v-container fluid>
                 <v-row v-if="error">
