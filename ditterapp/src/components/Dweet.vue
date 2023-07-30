@@ -8,10 +8,7 @@ const has_liked = computed(() => {
 });
 
 const like = () => {
-  if (
-  API.user.value &&
-  !props.dweet.liked_by.includes(API.user.value.author_username)
-  ) {
+  if (API.user.value && !props.dweet.liked_by.includes(API.user.value.author_username)) {
     API.likeDweet(props.dweet.uuid);
     props.dweet.liked_by.push(API.user.value.author_username);
     props.dweet.likes += 1;
