@@ -86,8 +86,14 @@ def like_dweet(request, session, uuid):
 @is_logged_in
 def post_dweet(request, session):
     request_json = json.loads(request.body)
-    dweet = Dweet(author_id=session["uuid"], content=request_json["content"])
+    content = request_json["content"]
+
+    if content == "":
+        return JsonResponse({"error": "Dweet cannot be empty"})
+
+    dweet = Dweet(author_id=session["uuid"], content=content)
     dweet.save()
+
     return JsonResponse({"uuid": dweet.uuid})
 
 

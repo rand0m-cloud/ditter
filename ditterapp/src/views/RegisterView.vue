@@ -66,7 +66,7 @@ const submit = async (e) => {
     <v-container>
       <v-row justify="space-around">
         <v-col sm="10" md="8" lg="6">
-          <v-sheet elevation="8" class="pa-4" rounded>
+          <v-sheet elevation="8" class="pa-4" rounded="xl">
             <v-form @submit.prevent>
               <v-container>
                 <v-row>
