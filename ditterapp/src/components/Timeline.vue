@@ -5,7 +5,7 @@ const props = defineProps({ dweets: Array });
 </script>
 
 <template>
-  <div class="timeline">
+  <div class="timeline h-100">
     <v-container>
       <v-row justify="space-around">
         <v-col xs="12" sm="8" md="6" lg="4" xl="3">
