@@ -6,9 +6,9 @@ const props = defineProps({ dweets: Array });
 
 <template>
   <div class="timeline">
-    <v-container fluid>
+    <v-container>
       <v-row justify="space-around">
-        <v-col cols="8" xl="4">
+        <v-col xs="12" sm="8" md="6" lg="4" xl="3">
           <Dweet v-for="dweet in props.dweets" :key="dweet.uuid" :dweet="dweet" />
         </v-col>
       </v-row>

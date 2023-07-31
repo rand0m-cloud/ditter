@@ -45,23 +45,21 @@ const send_dweet = async () => {
     Compose Dweet
   </v-btn>
   <v-dialog v-model="is_compose_open" width="auto">
-    <v-card class="pa-8 bg-orange" rounded>
+    <v-card class="pa-8 bg-orange" rounded="xl">
       <v-alert v-if="error" :text="error" color="error" />
-      <v-container class="pa-8 h-40">
+      <v-container>
         <v-row>
           <v-col>
             <textarea
-              class="pa-4 dweet-input"
+              class="dweet-input pa-2 w-100 h-100"
               placeholder="Whats on your mind?"
-              cols="40"
-              rows="5"
               v-model="dweet_content"
             />
           </v-col>
         </v-row>
-        <v-row>
-          <v-col>
-            <v-btn class="mt-4" block @click="send_dweet"> <v-icon>mdi-send</v-icon>Send </v-btn>
+        <v-row justify="end" class="mt-4">
+          <v-col cols="6">
+            <v-btn block @click="send_dweet"> <v-icon>mdi-send</v-icon>Send </v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -77,7 +75,8 @@ const send_dweet = async () => {
 }
 
 .dweet-input {
-  border: 1px solid black;
+  border: 2px solid black;
   resize: none;
+  border-radius: 0.5rem;
 }
 </style>
